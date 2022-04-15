@@ -1,3 +1,4 @@
+--GUI ref
 local AA_Roll = ui.reference("AA", "anti-aimbot angles", "Roll")
 local ui_e = {   
     enable = ui.new_checkbox("AA", "Other", "enable Custom Roll"),
@@ -6,7 +7,10 @@ local ui_e = {
     roll_jitter = ui.new_hotkey("AA", "Other", "Jitter Roll", false),
     debug_indicator = ui.new_checkbox("AA", "Other", "Show Current Roll Angle")
 }
+--localization
 ui.set_visible(ui_e.AA_Roll_add, ui.get(ui_e.enable)) ui.set_visible(ui_e.roll_inverter, ui.get(ui_e.enable)) ui.set_visible(ui_e.roll_jitter, ui.get(ui_e.enable)) ui.set_visible(ui_e.debug_indicator, ui.get(ui_e.enable))
+
+--invert function
 local function invertRoll()
     if ui.get(ui_e.enable) then
         ui.set_visible(AA_Roll, false)
@@ -23,6 +27,7 @@ end
 local function RenderIndicator()
     if ui.get(ui_e.debug_indicator) then indicator = renderer.indicator(255, 255, 255, 255, "Current Roll :", ui.get(AA_Roll)) end
 end
+--callbacks
 client.set_event_callback("run_command", invertRoll)
 ui.set_callback(ui_e.enable, function() ui.set_visible(ui_e.AA_Roll_add, ui.get(ui_e.enable)) ui.set_visible(ui_e.roll_inverter, ui.get(ui_e.enable)) ui.set_visible(ui_e.roll_jitter, ui.get(ui_e.enable)) ui.set_visible(ui_e.debug_indicator, ui.get(ui_e.enable)) end)
 client.set_event_callback('shutdown', function() ui.set_visible(AA_Roll, true) end)
